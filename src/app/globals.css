@@ -1,48 +1,69 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* EXPENSE DASHBOARD DESIGN SYSTEM - Extracted from design reference */
+/* All colors are HSL values matching the reference design */
 
 :root {
-  --background: 0 0% 100%;
-  --foreground: 222.2 84% 4.9%;
+  /* Core Background & Foreground */
+  --background: 220 14% 96%;  /* #F5F7FA - Light gray background */
+  --foreground: 210 29% 24%;  /* #2C3E50 - Dark navy text */
 
-  --card: 0 0% 100%;
-  --card-foreground: 222.2 84% 4.9%;
+  /* Card System */
+  --card: 0 0% 100%;  /* White cards */
+  --card-foreground: 210 29% 24%;  /* Dark text on cards */
 
+  /* Primary Colors - Navy & Blue */
+  --primary: 210 29% 24%;  /* #2C3E50 - Dark navy */
+  --primary-foreground: 0 0% 100%;  /* White text on primary */
+
+  /* Accent Blue - Primary CTA color */
+  --accent: 199 84% 61%;  /* #5DADE2 - Bright blue */
+  --accent-foreground: 0 0% 100%;  /* White text on accent */
+
+  /* Category Colors */
+  --category-dining: 22 100% 63%;  /* #FF8C42 - Orange */
+  --category-entertainment: 283 39% 53%;  /* #9B59B6 - Purple */
+  --category-shopping: 204 70% 53%;  /* #3498DB - Blue */
+  --category-transportation: 174 63% 49%;  /* #1ABC9C - Teal */
+  --category-miscellaneous: 200 18% 46%;  /* #7F8C8D - Gray */
+
+  /* Status Colors */
+  --success: 145 63% 49%;  /* #2ECC71 - Green */
+  --warning: 48 89% 50%;  /* #F1C40F - Yellow */
+  --destructive: 6 78% 57%;  /* #E74C3C - Red */
+  --destructive-foreground: 0 0% 100%;
+
+  /* Secondary/Muted */
+  --secondary: 220 14% 96%;  /* Light background */
+  --secondary-foreground: 210 29% 24%;
+  --muted: 220 13% 91%;  /* Slightly darker gray */
+  --muted-foreground: 200 18% 46%;  /* #7F8C8D - Muted text */
+
+  /* Borders & Inputs */
+  --border: 220 13% 91%;  /* Light borders */
+  --input: 220 13% 91%;
+  --ring: 199 84% 61%;  /* Accent blue for focus rings */
+
+  /* Border Radius */
+  --radius: 0.5rem;  /* 8px standard */
+  --radius-sm: 0.25rem;  /* 4px */
+  --radius-lg: 0.75rem;  /* 12px */
+  --radius-full: 9999px;  /* Pills */
+
+  /* Popover */
   --popover: 0 0% 100%;
-  --popover-foreground: 222.2 84% 4.9%;
+  --popover-foreground: 210 29% 24%;
 
-  --primary: 222.2 47.4% 11.2%;
-  --primary-foreground: 210 40% 98%;
-
-  --secondary: 210 40% 96.1%;
-  --secondary-foreground: 222.2 47.4% 11.2%;
-
-  --muted: 210 40% 96.1%;
-  --muted-foreground: 215.4 16.3% 46.9%;
-
-  --accent: 210 40% 96.1%;
-  --accent-foreground: 222.2 47.4% 11.2%;
-
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 210 40% 98%;
-
-  --border: 214.3 31.8% 91.4%;
-  --input: 214.3 31.8% 91.4%;
-  --ring: 222.2 84% 4.9%;
-
-  --radius: 0.5rem;
-
-  --sidebar-background: 0 0% 98%;
-  --sidebar-foreground: 240 5.3% 26.1%;
-  --sidebar-primary: 240 5.9% 10%;
-  --sidebar-primary-foreground: 0 0% 98%;
-  --sidebar-accent: 240 4.8% 95.9%;
-  --sidebar-accent-foreground: 240 5.9% 10%;
-  --sidebar-border: 220 13% 91%;
-  --sidebar-ring: 217.2 91.2% 59.8%;
+  /* Sidebar (for desktop navigation) */
+  --sidebar-background: 210 29% 24%;  /* Dark navy */
+  --sidebar-foreground: 0 0% 100%;
+  --sidebar-primary: 199 84% 61%;  /* Accent blue */
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 210 29% 29%;  /* Slightly lighter navy */
+  --sidebar-accent-foreground: 0 0% 100%;
+  --sidebar-border: 210 29% 29%;
+  --sidebar-ring: 199 84% 61%;
 }
 
 .dark {
@@ -157,7 +178,103 @@ All colors MUST be HSL.
   border-color: hsl(var(--border));
 }
 
+html {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 body {
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
+  font-size: 1rem;
+  line-height: 1.6;
+  font-weight: 400;
 }
+
+/* Typography Hierarchy */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  color: hsl(var(--foreground));
+  margin: 0;
+}
+
+h1 {
+  font-size: 3rem; /* 48px */
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 2.25rem; /* 36px */
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 1.875rem; /* 30px */
+  font-weight: 600;
+}
+
+h4 {
+  font-size: 1.5rem; /* 24px */
+  font-weight: 600;
+}
+
+h5 {
+  font-size: 1.25rem; /* 20px */
+  font-weight: 600;
+}
+
+h6 {
+  font-size: 1.125rem; /* 18px */
+  font-weight: 600;
+}
+
+p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Link Styles */
+a {
+  color: hsl(var(--accent));
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+a:hover {
+  opacity: 0.8;
+}
+
+/* Button Reset */
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* Input Styles */
+input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* Number Display - Large Currency */
+.currency-large {
+  font-size: 3rem;
+  font-weight: 700;
+  color: hsl(var(--foreground));
+  line-height: 1;
+}
+
+/* Category Colors as Utilities */
+.bg-category-dining { background-color: hsl(var(--category-dining)); }
+.bg-category-entertainment { background-color: hsl(var(--category-entertainment)); }
+.bg-category-shopping { background-color: hsl(var(--category-shopping)); }
+.bg-category-transportation { background-color: hsl(var(--category-transportation)); }
+.bg-category-miscellaneous { background-color: hsl(var(--category-miscellaneous)); }
+
+.text-category-dining { color: hsl(var(--category-dining)); }
+.text-category-entertainment { color: hsl(var(--category-entertainment)); }
+.text-category-shopping { color: hsl(var(--category-shopping)); }
+.text-category-transportation { color: hsl(var(--category-transportation)); }
+.text-category-miscellaneous { color: hsl(var(--category-miscellaneous)); }

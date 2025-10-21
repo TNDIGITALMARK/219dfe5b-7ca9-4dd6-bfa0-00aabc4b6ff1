@@ -1,36 +1,113 @@
-export const dynamic = 'force-dynamic'
+'use client';
 
-export default function Index() {
+import { Card } from '@/components/ui/card';
+import { ExpenseCategoryCard } from '@/components/expense-category-card';
+import { TransactionItem } from '@/components/transaction-item';
+import { BudgetProgressCard } from '@/components/budget-progress-card';
+import { SpendingChart } from '@/components/spending-chart';
+import {
+  mockCategoryData,
+  mockTransactions,
+  mockBudgets,
+  mockTotalMonthlySpending,
+} from '@/lib/mock-data';
+import {
+  Utensils,
+  Music,
+  ShoppingBag,
+  Car,
+  MoreHorizontal,
+} from 'lucide-react';
+import { useRouter } from 'next/navigation';
+
+const iconMap = {
+  Utensils,
+  Music,
+  ShoppingBag,
+  Car,
+  MoreHorizontal,
+};
+
+export default function DashboardPage() {
+  const router = useRouter();
+
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="text-center max-w-2xl px-4">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your App</h1>
-        <p className="text-xl mb-6 text-gray-600">
-          This template is configured to be absolutely lenient - builds never fail on validation errors.
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-left">
-          <div className="p-4 bg-green-50 rounded-lg border border-green-200">
-            <h3 className="font-semibold text-green-800 mb-2">✅ Always Builds</h3>
-            <ul className="text-green-700 space-y-1">
-              <li>• TypeScript errors ignored</li>
-              <li>• ESLint warnings ignored</li>
-              <li>• Global error boundaries</li>
-              <li>• Asset type safety</li>
-            </ul>
+    <div className="min-h-screen bg-background">
+      <div className="container mx-auto px-4 py-8 space-y-8">
+        {/* Hero Section - Total Spending */}
+        <div className="text-center space-y-2">
+          <h1 className="text-4xl md:text-5xl font-bold text-foreground">
+            Take Control of Your Finances
+          </h1>
+          <p className="text-muted-foreground text-lg">
+            Smart budgeting, effortless tracking, informed decisions
+          </p>
+        </div>
+
+        {/* Total Monthly Spending Card */}
+        <Card className="p-8 bg-gradient-to-br from-primary to-primary/90 text-primary-foreground">
+          <div className="text-center space-y-2">
+            <p className="text-sm uppercase tracking-wider opacity-90">
+              Total Monthly Spending
+            </p>
+            <p className="text-5xl md:text-6xl font-bold">
+              ${mockTotalMonthlySpending.toLocaleString()}
+            </p>
+            <p className="text-sm opacity-75">March 2025</p>
           </div>
-          <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
-            <h3 className="font-semibold text-blue-800 mb-2">🚀 Production Ready</h3>
-            <ul className="text-blue-700 space-y-1">
-              <li>• Next.js 15.5.2 App Router</li>
-              <li>• Vercel optimized</li>
-              <li>• SSR/SEO friendly</li>
-              <li>• Browser API protection</li>
-            </ul>
+        </Card>
+
+        {/* Category Breakdown */}
+        <div>
+          <h2 className="text-2xl font-semibold mb-4 text-foreground">
+            Spending by Category
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {mockCategoryData.map((category) => {
+              const IconComponent = iconMap[category.icon as keyof typeof iconMap];
+              return (
+                <ExpenseCategoryCard
+                  key={category.category}
+                  icon={IconComponent}
+                  category={category.category}
+                  amount={category.amount}
+                  color={category.color}
+                  onClick={() => router.push(`/category/${category.category}`)}
+                />
+              );
+            })}
           </div>
         </div>
-        <p className="mt-6 text-gray-500">
-          Start building your amazing project here! This template will never fail builds due to validation errors.
-        </p>
+
+        {/* Chart and Recent Transactions Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Spending Chart */}
+          <SpendingChart data={mockCategoryData} />
+
+          {/* Recent Transactions */}
+          <Card className="p-6">
+            <h3 className="text-xl font-semibold mb-4 text-foreground">
+              Recent Transactions
+            </h3>
+            <div className="space-y-2">
+              {mockTransactions.slice(0, 6).map((transaction) => (
+                <TransactionItem key={transaction.id} transaction={transaction} />
+              ))}
+            </div>
+          </Card>
+        </div>
+
+        {/* Budget Progress */}
+        <div>
+          <h2 className="text-2xl font-semibold mb-4 text-foreground">
+            Budget Tracking
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {mockBudgets.map((budget) => (
+              <BudgetProgressCard key={budget.category} budget={budget} />
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
